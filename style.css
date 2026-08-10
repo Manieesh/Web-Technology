@@ -1,0 +1,187 @@
+/* General Styling */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background-color: #f5f5f5;
+    color: #222;
+}
+
+
+/* Header */
+
+header {
+    background-color: #e63946;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-shadow: 3px 3px 4px #222;
+}
+
+header h1 {
+    margin: 5px;
+    font-size: 38px;
+    letter-spacing: 3px;
+}
+
+header p {
+    margin: 8px;
+    font-style: italic;
+}
+
+
+/* Navigation */
+
+nav {
+    background-color: #222;
+    text-align: center;
+    padding: 12px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+nav a:hover {
+    background-color: #ffd60a;
+    color: #222;
+}
+
+
+/* Hero Section */
+
+.hero {
+    background-color: #ffd60a;
+    padding: 30px;
+    text-align: center;
+    margin: 20px auto;
+    width: 90%;
+}
+
+.hero h2 {
+    font-size: 30px;
+    margin: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+}
+
+
+/* Comic Cards */
+
+.comics {
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.comic-card {
+    background-color: white;
+    width: 250px;
+    padding: 20px;
+    border: 3px solid #222;
+    box-shadow: 5px 5px 0px #e63946;
+    text-align: center;
+}
+
+.comic-card h3 {
+    color: #e63946;
+    font-size: 22px;
+}
+
+.comic-card p {
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+}
+
+
+/* Buy Button */
+
+.buy-btn {
+    display: block;
+    background-color: #e63946;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.buy-btn:hover {
+    background-color: #ffd60a;
+    color: #222;
+}
+
+
+/* Categories */
+
+.categories {
+    background-color: #222;
+    color: white;
+    width: 90%;
+    margin: 30px auto;
+    padding: 25px;
+}
+
+.categories h2 {
+    color: #ffd60a;
+    text-align: center;
+}
+
+.categories ul {
+    list-style-type: circle;
+    line-height: 2;
+}
+
+
+/* Footer */
+
+footer {
+    background-color: #e63946;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+
+/* Responsive Design */
+
+@media screen and (max-width: 700px) {
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    nav a {
+        display: block;
+    }
+
+    .comic-card {
+        width: 90%;
+    }
+
+    .hero,
+    .comics,
+    .categories {
+        width: 95%;
+    }
+}
