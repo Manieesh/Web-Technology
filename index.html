@@ -19,15 +19,24 @@
 
     <!-- Navigation -->
     <nav>
-        <a href="#">Home</a>
-        <a href="#">Comics</a>
-        <a href="#">Characters</a>
-        <a href="#">New Arrivals</a>
-        <a href="#">Contact</a>
+        <div class="dropdown">
+            <a href="#home" class="dropbtn">Home ▾</a>
+            <div class="dropdown-content">
+                <a href="#comics">Item 1</a>
+                <a href="#categories">Item 2</a>
+                <a href="#auth">Item 3</a>
+                <a href="#contact">Item 4</a>
+            </div>
+        </div>
+        <a href="#comics">Comics</a>
+        <a href="#comics">Characters</a>
+        <a href="#comics">New Arrivals</a>
+        <a href="#auth" id="nav-auth-link">Sign In / Sign Up</a>
+        <a href="#contact">Contact</a>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="home">
         <h2>🔥 Welcome to Comic World! 🔥</h2>
         <p>
             Discover legendary heroes, powerful villains
@@ -36,7 +45,7 @@
     </section>
 
     <!-- Comic Books -->
-    <section class="comics">
+    <section class="comics" id="comics">
 
         <div class="comic-card">
             <h3>🦸 Superhero Adventures</h3>
@@ -81,7 +90,7 @@
     </section>
 
     <!-- Categories -->
-    <section class="categories">
+    <section class="categories" id="categories">
         <h2>📚 Comic Categories</h2>
 
         <ul>
@@ -94,11 +103,221 @@
         </ul>
     </section>
 
+    <!-- Authentication Section (Experiment 4) -->
+    <section class="auth-section" id="auth">
+        <div class="auth-heading">
+            <h2>💥 Member Portal 💥</h2>
+            <p>Sign in to access your collection or create an account to start your comic journey</p>
+        </div>
+
+        <!-- Feedback Alert Banner -->
+        <div id="auth-alert" class="auth-alert" style="display: none;"></div>
+
+        <!-- Form Cards Container (Flexbox) -->
+        <div class="auth-container" id="auth-forms-container">
+            <!-- Sign-In Form -->
+            <div class="auth-card">
+                <h3>Sign In</h3>
+                <form id="signin-form" action="#" method="post">
+                    <div class="form-group">
+                        <label for="signin-username">Username</label>
+                        <input type="text" id="signin-username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signin-password">Password</label>
+                        <input type="password" id="signin-password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="auth-button">Sign In</button>
+                </form>
+            </div>
+
+            <!-- Sign-Up Form -->
+            <div class="auth-card">
+                <h3>Sign Up</h3>
+                <form id="signup-form" action="#" method="post">
+                    <div class="form-group">
+                        <label for="signup-name">Name</label>
+                        <input type="text" id="signup-name" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" name="password" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="auth-button">Sign Up</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Demo Credentials Hint -->
+        <p class="auth-demo-hint" id="auth-demo-hint">
+            💡 <em>Demo account: <strong>comicfan</strong> / password: <strong>pass123</strong> — or register a new account!</em>
+        </p>
+
+        <!-- Logged-in State Card -->
+        <div class="auth-logged-in-card" id="auth-logged-in-card" style="display: none;">
+            <div class="profile-avatar">🦸</div>
+            <h3>Welcome, <span id="user-display-name">Hero</span>!</h3>
+            <p class="profile-status">Status: <strong>Active Comic World Member</strong></p>
+            <p class="profile-details">You are successfully signed in to Comic World. Enjoy exclusive access to new releases, collector editions, and superhero perks!</p>
+            <div class="profile-actions">
+                <a href="#comics" class="auth-button profile-btn">Browse Comics</a>
+                <button type="button" id="logout-btn" class="logout-button">Sign Out</button>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer>
-        <p>© 2026 Comic World | All Rights Reserved</p>
-        <p>Explore • Collect • Enjoy</p>
+    <footer id="contact">
+        <div class="footer-content">
+            <p>© 2026 Comic World | All Rights Reserved</p>
+            <p>Explore • Collect • Enjoy</p>
+            <hr class="footer-divider">
+            <div class="footer-lab-details">
+                <p><strong>Developer Address:</strong> Department of Computer Science & Engineering, Karunya Institute of Technology and Sciences, Coimbatore, Tamil Nadu - 641114</p>
+                <p><strong>Register Number:</strong> URK24CS9002 | <strong>Batch:</strong> Web Technology Lab Batch 1</p>
+            </div>
+        </div>
     </footer>
+
+    <!-- Authentication Logic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const signInForm = document.getElementById('signin-form');
+            const signUpForm = document.getElementById('signup-form');
+            const authAlert = document.getElementById('auth-alert');
+            const authFormsContainer = document.getElementById('auth-forms-container');
+            const loggedInCard = document.getElementById('auth-logged-in-card');
+            const userDisplayName = document.getElementById('user-display-name');
+            const navAuthLink = document.getElementById('nav-auth-link');
+            const logoutBtn = document.getElementById('logout-btn');
+            const demoHint = document.getElementById('auth-demo-hint');
+
+            // Default demo account
+            function getStoredUsers() {
+                const users = localStorage.getItem('comic_world_users');
+                if (users) {
+                    try { return JSON.parse(users); } catch (e) { return {}; }
+                }
+                return {
+                    'comicfan': { name: 'Comic Fan', email: 'comicfan@example.com', password: 'pass123' },
+                    'admin': { name: 'Admin Hero', email: 'admin@comicworld.com', password: 'admin' }
+                };
+            }
+
+            function saveUser(username, userData) {
+                const users = getStoredUsers();
+                users[username.toLowerCase()] = userData;
+                localStorage.setItem('comic_world_users', JSON.stringify(users));
+            }
+
+            function showAlert(message, type) {
+                authAlert.textContent = message;
+                authAlert.className = 'auth-alert ' + type;
+                authAlert.style.display = 'block';
+                authAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            function setLoggedInState(user) {
+                sessionStorage.setItem('comic_world_active_user', JSON.stringify(user));
+                authFormsContainer.style.display = 'none';
+                if (demoHint) demoHint.style.display = 'none';
+                loggedInCard.style.display = 'block';
+                userDisplayName.textContent = user.name || user.username;
+                if (navAuthLink) {
+                    navAuthLink.innerHTML = '👤 ' + (user.name || user.username) + ' (Signed In)';
+                }
+            }
+
+            function setLoggedOutState() {
+                sessionStorage.removeItem('comic_world_active_user');
+                authFormsContainer.style.display = 'flex';
+                if (demoHint) demoHint.style.display = 'block';
+                loggedInCard.style.display = 'none';
+                if (navAuthLink) {
+                    navAuthLink.textContent = 'Sign In / Sign Up';
+                }
+            }
+
+            // Restore active session if present
+            const currentSession = sessionStorage.getItem('comic_world_active_user');
+            if (currentSession) {
+                try {
+                    setLoggedInState(JSON.parse(currentSession));
+                } catch (e) {
+                    setLoggedOutState();
+                }
+            }
+
+            // Sign In submit handler
+            if (signInForm) {
+                signInForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const usernameInput = document.getElementById('signin-username').value.trim();
+                    const passwordInput = document.getElementById('signin-password').value;
+
+                    if (!usernameInput || !passwordInput) {
+                        showAlert('⚠️ Please enter both username and password.', 'error');
+                        return;
+                    }
+
+                    const users = getStoredUsers();
+                    const foundUser = users[usernameInput.toLowerCase()];
+
+                    if (foundUser && foundUser.password === passwordInput) {
+                        showAlert('🎉 Sign-In successful! Welcome back, ' + (foundUser.name || usernameInput) + '!', 'success');
+                        setLoggedInState({
+                            username: usernameInput,
+                            name: foundUser.name || usernameInput,
+                            email: foundUser.email
+                        });
+                        signInForm.reset();
+                    } else if (!foundUser) {
+                        showAlert('❌ Account not found. Please check your username or register below.', 'error');
+                    } else {
+                        showAlert('❌ Incorrect password. Please try again.', 'error');
+                    }
+                });
+            }
+
+            // Sign Up submit handler
+            if (signUpForm) {
+                signUpForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const name = document.getElementById('signup-name').value.trim();
+                    const email = document.getElementById('signup-email').value.trim();
+                    const password = document.getElementById('signup-password').value;
+
+                    if (!name || !email || !password) {
+                        showAlert('⚠️ Please fill in all fields to sign up.', 'error');
+                        return;
+                    }
+
+                    const username = email.split('@')[0].toLowerCase();
+                    saveUser(username, { name: name, email: email, password: password });
+
+                    showAlert('🎉 Account created successfully! You are now signed in as ' + name + '.', 'success');
+                    setLoggedInState({
+                        username: username,
+                        name: name,
+                        email: email
+                    });
+                    signUpForm.reset();
+                });
+            }
+
+            // Logout click handler
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function () {
+                    setLoggedOutState();
+                    showAlert('👋 You have successfully signed out.', 'success');
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
